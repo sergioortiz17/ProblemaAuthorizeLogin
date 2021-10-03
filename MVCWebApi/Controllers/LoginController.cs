@@ -18,6 +18,8 @@ namespace MVCWebApi.Controllers
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
     {
+
+
         [HttpGet]
         [Route("echoping")]
         public IHttpActionResult EchoPing()
@@ -35,31 +37,31 @@ namespace MVCWebApi.Controllers
         [HttpPost]
         [Route("authenticate")]
         public IHttpActionResult Authenticate(LoginRequest login)
+
+            //Si el cuerpo es vacio o llavez vacias o le falta alguna credencial  el control me tira un error 
         {
-            if (login == null)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            //TODO: This code is only for demo - extract method in new class & validate correctly in your application !!
-             var isUserValid = (login.Username == "user" && login.Password == "123456");
+            if (login == null || login.Email == null || login.Password == null)
+            {
+                string error = "Email y Password son requeridos";
+                return BadRequest(error);
+            }
+
+            GestorLoginRequest gLogin = new GestorLoginRequest();
+            //Creo el objeto Login pasandole el parametro Username
+            LoginRequest credentials = gLogin.Login(login.Email);
+            var isUserValid = false;
+            //Si el Username o el Password no coinciden el usuario sigue siendo invalido 
+
+            if (credentials != null)
+            { 
+                if (login.Email == credentials.Email && login.Password == credentials.Password)
+                isUserValid = true;
+            }
+            //Solo si es valido se le crea el token sino trae Unauthorized 
             if (isUserValid)
             {
-                var rolename = "Developer";
-                var token = TokenGenerator.GenerateTokenJwt(login.Username, rolename);
-                return Ok(token);
-            }
-            //TODO: This code is only for demo - extract method in new class & validate correctly in your application !!
-             var isTesterValid = (login.Username == "test" && login.Password == "123456");
-            if (isTesterValid)
-            {
-                var rolename = "Tester";
-                var token = TokenGenerator.GenerateTokenJwt(login.Username, rolename);
-                return Ok(token);
-            }
-            //TODO: This code is only for demo - extract method in new class & validate correctly in your application !!
-             var isAdminValid = (login.Username == "admin" && login.Password == "123456");
-            if (isAdminValid)
-            {
-                var rolename = "Administrator";
-                var token = TokenGenerator.GenerateTokenJwt(login.Username, rolename);
+                var rolename = "User";
+                var token = TokenGenerator.GenerateTokenJwt(login.Email, rolename);
                 return Ok(token);
             }
             // Unauthorized access

@@ -19,10 +19,10 @@ namespace MVCWebApi.Models
         private int dni;
         private string email;
         private string fotoDni;
-        private int password;
+        private string password;
 
         //constructor que recibe parametros
-        public Cliente(int idCliente, string nombre, string apellido, string ciudad, int cP, string provincia, string nombreUsuario, int dni, string email, string fotoDni, int password)
+        public Cliente(int idCliente, string nombre, string apellido, string ciudad, int cP, string provincia, string nombreUsuario, int dni, string email, string fotoDni, string password)
         {
             IdCliente = idCliente;
             Nombre = nombre;
@@ -52,6 +52,6 @@ namespace MVCWebApi.Models
         public int Dni { get => dni; set => dni = value; }
         public string Email { get => email; set => email = value; }
         public string FotoDni { get => fotoDni; set => fotoDni = value; }
-        public int Password { get => password; set => password = value; }
+        public string Password { get => password; set => password = value; }
     }
 }

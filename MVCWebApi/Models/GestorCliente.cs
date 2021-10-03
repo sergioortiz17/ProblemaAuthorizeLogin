@@ -81,7 +81,7 @@ namespace MVCWebApi.Models
                     int dni = dr.GetInt32(7);
                     string email = dr.GetString(8).Trim();
                     string fotoDni = dr.GetString(9).Trim();
-                    int password = dr.GetInt32(10);
+                    string password = dr.GetString(10);
 
                     cliente = new Cliente(idCliente, nombre, apellido, ciudad, cP, provincia, nombreUsuario, dni, email, fotoDni, password);
                 }
@@ -138,7 +138,7 @@ namespace MVCWebApi.Models
                     int dni = dr.GetInt32(7);
                     string email = dr.GetString(8).Trim();
                     string fotoDni = dr.GetString(9).Trim();
-                    int password = dr.GetInt32(10);
+                    string password = dr.GetString(10);
                     Cliente cliente = new Cliente(idCliente, nombre, apellido, ciudad, cP, provincia, nombreUsuario, dni, email, fotoDni, password);
                     lista.Add(cliente);
                 }
